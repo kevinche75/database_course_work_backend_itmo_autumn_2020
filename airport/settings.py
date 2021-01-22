@@ -24,8 +24,31 @@ SECRET_KEY = '^p)!=bv9f)+r1daf+8(8j6m9ft4p6&2udor!qb5nw-0dsj(qrf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+# setting CORS
+ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITE_LIST = (
+    'http://localhost:4200'
+)
+CORS_EXPOSE_HEADERS = (
+    'access-token',
+    'refresh-token'
+)
+CORS_ALLOW_HEADERS = (
+    'access-token',
+    'refresh-token',
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'enctype',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
 
 
 # Application definition
@@ -37,9 +60,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'auth',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware'
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -76,11 +103,11 @@ WSGI_APPLICATION = 'airport.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_db',
-        'USER' : 'airport',
-        'PASSWORD' : '1212dima',
-        'HOST' : '127.0.0.1',
-        'PORT' : '5432',
+        'NAME': 'studs',
+        'USER': 's265061',
+        'PASSWORD': 'lyr908',
+        'HOST': '127.0.0.1',
+        'PORT': '5500',
     }
 }
 
