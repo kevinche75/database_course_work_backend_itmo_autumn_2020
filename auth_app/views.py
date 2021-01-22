@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from . import models
 from . import db_utils
 from .serializer import EmployeeSerializer
-from ..jwt_app import jwt_utils
+from jwt_app import jwt_utils
 
 
 @api_view(['GET'])
@@ -22,4 +22,6 @@ def auth(request: Request) -> Response:
         'employee': employee_serializer.data
     }
     return Response(data, headers=headers, status=status.HTTP_200_OK)
+
+
 

@@ -9,7 +9,7 @@ def set_token_to_response_headers(employee_no) -> dict:
     return employee_headers
 
 
-def generate_access_token(employee_no: str) -> str:
+def generate_access_token(employee_no) -> str:
 
     access_token_payload = {
         'employee_no': employee_no,
@@ -18,7 +18,7 @@ def generate_access_token(employee_no: str) -> str:
     }
 
     access_token = jwt.encode(access_token_payload,
-                              settings.SECRET_KEY, algorithm='HS256').decode('utf-8')
+                              settings.SECRET_KEY, algorithm='HS256')
     return access_token
 
 def get_employee_no_from_payload(access_token: str) -> str:
