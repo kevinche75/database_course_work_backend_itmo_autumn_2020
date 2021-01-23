@@ -16,6 +16,7 @@ def calculate_price(max_weight, relaxing_room, seat_no, flight_id) -> float:
     cursor = connection.cursor()
     cursor.execute(f'select calc_ticket_price({flight_id}, \'{seat_no}\');')
     row = cursor.fetchall()
+    row = row[0][0]
     print(row)
     rel_room_c = {
         'middle': 200,
@@ -65,10 +66,12 @@ def book_ticket(request: Request) -> Response:
 @api_view(['POST'])
 def get_price(request: Request) -> Response:
     passengers = request.data.get('passengers')
-    flight_id = request.data.get('')
+    flight_id = request.data.get('flight')
     tickets = Ticket.objects.all()
     tickets_id = [i.seat_id for i in tickets]
+    print(tickets_id)
     seats = Seat.objects.filter(~Q(id__in=tickets_id), flight_id=flight_id)
+    print(seats)
     seats_classes = {
         'economy': seats.filter(class_field='economy').first(),
         'business': seats.filter(class_field='business').first()
@@ -79,7 +82,7 @@ def get_price(request: Request) -> Response:
         has_baggage = True if int(passenger['max_weight']) != 0 else False
         relaxing_room_type = passenger['waitingRoom']
         print(seats_classes[seat_type])
-        amount += calculate_price(passenger['max_weight'], relaxing_room_type, seats_classes[seat_type].get('number'), flight_id)
+        amount += calculate_price(passenger['max_weight'], relaxing_room_type, seats_classes[seat_type].number, flight_id)
         passenger_serializer = PassengerSerializer(passenger)
         passenger = Passenger.objects.get(passport_no=passenger_serializer.data.get('passport_no'))
         print(passenger)
