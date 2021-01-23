@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import *
+from data_base_course_work_backend.auth_app.models import *
 
 
 class EmployeeSerializer(serializers.ModelSerializer):

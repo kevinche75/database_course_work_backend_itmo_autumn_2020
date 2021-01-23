@@ -138,25 +138,7 @@ class Seat(models.Model):
         db_table = 'seat'
 
 
-class Ticket(models.Model):
-    passenger = models.ForeignKey(Passenger, models.DO_NOTHING, blank=True, null=True)
-    seat = models.ForeignKey(Seat, models.DO_NOTHING)
-    amount = models.FloatField()
-    book = models.ForeignKey(Booking, models.DO_NOTHING, blank=True, null=True)
-    registered = models.BooleanField()
-
-    class Meta:
-        managed = False
-        db_table = 'ticket'
 
 
-class TripPrice(models.Model):
-    company_name = models.OneToOneField(Company, models.DO_NOTHING, db_column='company_name', primary_key=True)
-    departure_airport = models.CharField(max_length=4)
-    arrival_airport = models.CharField(max_length=4)
-    price = models.IntegerField()
 
-    class Meta:
-        managed = False
-        db_table = 'trip_price'
-        unique_together = (('company_name', 'departure_airport', 'arrival_airport', 'price'),)
+

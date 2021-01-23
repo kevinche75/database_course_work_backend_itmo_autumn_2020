@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework.request import Request
 from rest_framework.response import Response
-from . import models
+
 from . import db_utils
 from .serializer import EmployeeSerializer
 from jwt_app import jwt_utils

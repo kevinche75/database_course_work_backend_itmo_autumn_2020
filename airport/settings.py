@@ -62,7 +62,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'auth_app',
+    'data_base_course_work_backend.auth_app',
+    'data_base_course_work_backend.flight_app',
+    'data_base_course_work_backend.booking'
 
 
 ]
