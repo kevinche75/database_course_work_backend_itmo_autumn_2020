@@ -110,13 +110,7 @@ class ReceptionSchedule(models.Model):
         db_table = 'reception_schedule'
 
 
-class RelaxRoomBooking(models.Model):
-    ticket = models.ForeignKey('Ticket', models.DO_NOTHING)
-    class_field = models.TextField(db_column='class')  # Field renamed because it was a Python reserved word. This field type is a guess.
 
-    class Meta:
-        managed = False
-        db_table = 'relax_room_booking'
 
 
 
