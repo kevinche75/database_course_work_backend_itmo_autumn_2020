@@ -1,14 +1,24 @@
+from django.db.models import Q
 from django.shortcuts import render
 
 # Create your views here.
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
 
 from data_base_course_work_backend.booking.models import Passenger
 from data_base_course_work_backend.booking.serializer import PassengerSerializer, BaggageSerializer
-from data_base_course_work_backend.flight_app.models import Flight, Baggage
+from data_base_course_work_backend.flight_app.models import Flight, Baggage, Ticket, Seat
 
+
+@api_view(['POST'])
+def get_business(request: Request) -> Response:
+    flight_id = request.data.get('id')
+    tickets = Ticket.objects.all()
+    tickets_id = [i.seat_id for i in tickets]
+    seats = Seat.objects.filter(~Q(id__in=tickets_id), flight_id=flight_id, class_field='business').count()
+    return Response(seats, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def book_ticket(request: Request) -> Response:
