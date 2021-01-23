@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from data_base_course_work_backend.auth_app.models import *
+from data_base_course_work_backend.flight_app.models import Employee, Company
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
