@@ -66,6 +66,16 @@ class Ticket(models.Model):
         db_table = 'ticket'
 
 
+class Baggage(models.Model):
+    ticket = models.ForeignKey(Ticket, models.DO_NOTHING)
+    total_weight = models.FloatField(blank=True, null=True)
+    max_weight = models.FloatField()
+    status = models.TextField(blank=True, null=True)  # This field type is a guess.
+
+    class Meta:
+        managed = False
+        db_table = 'baggage'
+
 
 class TripPrice(models.Model):
     company_name = models.OneToOneField(Company, models.DO_NOTHING, db_column='company_name', primary_key=True)

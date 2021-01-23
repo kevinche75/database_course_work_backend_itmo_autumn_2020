@@ -1,6 +1,9 @@
 from django.db import models
 
 # Create your models here.
+
+
+
 class Passenger(models.Model):
     passport_no = models.CharField(primary_key=True, max_length=10)
     name = models.CharField(max_length=30)
@@ -11,3 +14,5 @@ class Passenger(models.Model):
     class Meta:
         managed = False
         db_table = 'passenger'
+
+

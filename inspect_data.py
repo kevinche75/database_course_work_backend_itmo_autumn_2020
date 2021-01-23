@@ -19,15 +19,7 @@ class Aircraft(models.Model):
         db_table = 'aircraft'
 
 
-class Baggage(models.Model):
-    ticket = models.ForeignKey('Ticket', models.DO_NOTHING)
-    total_weight = models.FloatField(blank=True, null=True)
-    max_weight = models.FloatField()
-    status = models.TextField(blank=True, null=True)  # This field type is a guess.
 
-    class Meta:
-        managed = False
-        db_table = 'baggage'
 
 
 class Booking(models.Model):
