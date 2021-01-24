@@ -11,9 +11,9 @@ from . import db_utils
 from .serializer import EmployeeSerializer
 from jwt_app import jwt_utils
 
-from data_base_course_work_backend.flight_app.models import GateSchedule, ReceptionSchedule
-from ..booking.models import Passenger
-from ..booking.serializer import PassengerSerializer
+from data_base_course_work_backend.flight_app.models import GateSchedule, ReceptionSchedule, Ticket, Baggage
+from data_base_course_work_backend.booking.models import Passenger
+from data_base_course_work_backend.booking.serializer import PassengerSerializer
 
 
 @api_view(['POST'])
@@ -53,6 +53,7 @@ def get_schedule(request: Request) -> Response:
 
     return Response(data, status=status.HTTP_200_OK)
 
+@api_view(['POST'])
 def get_passenger(request: Request) -> Response:
     flight_id = request.data.get('flightID')
     passport_no = request.data.get('passport')
@@ -60,4 +61,65 @@ def get_passenger(request: Request) -> Response:
         passenger = Passenger.objects.get(passport_no=passport_no)
     except Passenger.DoesNotExist:
         return Response(status=status.HTTP_409_CONFLICT)
-    passenger = PassengerSerializer(passenger)
+    ticket = Ticket.objects.get(passenger_id=passport_no, seat__flight_id=flight_id)
+    try:
+        baggage = Baggage.objects.get(ticket_id=ticket.id)
+        baggage_status = baggage.status
+        max_weight = baggage.max_weight
+    except Baggage.DoesNotExist:
+        baggage_status = 'null'
+        max_weight = 0
+    data = {
+        'passport_no': passenger.passport_no,
+        'max_weight': max_weight,
+        'status': baggage_status
+    }
+
+    return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def registrate_passenger(request: Request) -> Response:
+    passport_no = request.data.get('passport')
+    total_weight = request.data.get('totalWeight')
+    flight_id = request.data.get('flightID')
+    try:
+        passenger = Passenger.objects.get(passport_no=passport_no)
+    except Passenger.DoesNotExist:
+        return Response(status=status.HTTP_409_CONFLICT)
+    ticket = Ticket.objects.get(passenger_id=passport_no, seat__flight_id=flight_id)
+    ticket.registered = True
+    ticket.save()
+
+    try:
+        baggage = Baggage.objects.get(ticket_id=ticket.id)
+        baggage.total_weight = total_weight
+        baggage.status = 'accept'
+        baggage.save()
+    except Baggage.DoesNotExist:
+        pass
+
+    return Response('registered', status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def passenger_to_land(request: Request) -> Response:
+    passport_no = request.data.get('passport')
+    flight_id = request.data.get('flightID')
+    baggage_status = request.data.get('baggageStatus')
+    try:
+        passenger = Passenger.objects.get(passport_no=passport_no)
+    except Passenger.DoesNotExist:
+        return Response(status=status.HTTP_409_CONFLICT)
+    ticket = Ticket.objects.get(passenger_id=passport_no, seat__flight_id=flight_id)
+    if not ticket.registered:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+    try:
+        baggage = Baggage.objects.get(ticket_id=ticket.id)
+        baggage.status = baggage_status
+        baggage.save()
+    except Baggage.DoesNotExist:
+       pass
+
+    return Response('Good trip', status=status.HTTP_200_OK)
+
+
