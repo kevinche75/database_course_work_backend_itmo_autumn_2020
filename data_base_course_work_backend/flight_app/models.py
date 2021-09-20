@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-from data_base_course_work_backend.booking.models import Passenger
+from booking.models import Passenger
 class Company(models.Model):
     name = models.CharField(primary_key=True, max_length=30)
     type = models.TextField(blank=True, null=True)  # This field type is a guess.

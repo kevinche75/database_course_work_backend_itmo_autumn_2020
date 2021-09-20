@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from data_base_course_work_backend.flight_app.models import Aircraft, Company, Flight, Employee, GateSchedule, \
+from flight_app.models import Aircraft, Company, Flight, Employee, GateSchedule, \
     ReceptionSchedule
 
 

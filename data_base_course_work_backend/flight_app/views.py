@@ -7,7 +7,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from django.db.models import Q, Count
 from datetime import datetime
-from data_base_course_work_backend.flight_app.models import TripPrice, Flight, Ticket, Seat
+from flight_app.models import TripPrice, Flight, Ticket, Seat
 
 
 @api_view(['GET'])

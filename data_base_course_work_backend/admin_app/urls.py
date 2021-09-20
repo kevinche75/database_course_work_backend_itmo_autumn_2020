@@ -1,6 +1,6 @@
 from django.urls import path
 
-from data_base_course_work_backend.admin_app.views import *
+from admin_app.views import *
 
 urlpatterns = [
     path('aircraft/get/', get_aircrafts),

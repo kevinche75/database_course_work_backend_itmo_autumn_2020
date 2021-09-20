@@ -1,4 +1,4 @@
-from data_base_course_work_backend.flight_app.models import Employee
+from flight_app.models import Employee
 
 
 def get_employee_from_db(passport_id: str) -> Employee:

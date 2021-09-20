@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from data_base_course_work_backend.booking.models import Passenger
-from data_base_course_work_backend.flight_app.models import Baggage
+from booking.models import Passenger
+from flight_app.models import Baggage
 
 
 class PassengerSerializer(serializers.ModelSerializer):

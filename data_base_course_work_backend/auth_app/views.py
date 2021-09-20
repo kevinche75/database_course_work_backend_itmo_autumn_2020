@@ -11,9 +11,9 @@ from . import db_utils
 from .serializer import EmployeeSerializer
 from jwt_app import jwt_utils
 
-from data_base_course_work_backend.flight_app.models import GateSchedule, ReceptionSchedule, Ticket, Baggage
-from data_base_course_work_backend.booking.models import Passenger
-from data_base_course_work_backend.booking.serializer import PassengerSerializer
+from flight_app.models import GateSchedule, ReceptionSchedule, Ticket, Baggage
+from booking.models import Passenger
+from booking.serializer import PassengerSerializer
 
 
 @api_view(['POST'])

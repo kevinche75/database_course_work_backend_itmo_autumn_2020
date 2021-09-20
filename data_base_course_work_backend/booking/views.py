@@ -10,9 +10,9 @@ from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from data_base_course_work_backend.booking.models import Passenger
-from data_base_course_work_backend.booking.serializer import PassengerSerializer, BaggageSerializer
-from data_base_course_work_backend.flight_app.models import Flight, Baggage, Ticket, Seat, Booking, RelaxRoomBooking
+from booking.models import Passenger
+from booking.serializer import PassengerSerializer, BaggageSerializer
+from flight_app.models import Flight, Baggage, Ticket, Seat, Booking, RelaxRoomBooking
 
 
 def calculate_price(max_weight, relaxing_room, seat_no, flight_id) -> float:
