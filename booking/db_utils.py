@@ -1,8 +1,13 @@
 from django.db import connection
-from flight_app.models import Flight, Baggage, Ticket, Seat, Booking, RelaxRoomBooking
+from flight_app.models import Baggage, Ticket, Seat, RelaxRoomBooking
 from django.db.models import Q
 from booking.models import Passenger
-from booking.serializer import PassengerSerializer, BaggageSerializer
+from booking.serializer import PassengerSerializer
+
+MIDDLE_TAX = 200
+COMFORT_TAX = 500
+COMFORT_PLUS_TAX = 1000
+BAGGAGE_TAX = 200
 
 def calculate_price(max_weight, relaxing_room, seat_no, flight_id) -> float:
     cursor = connection.cursor()
@@ -11,13 +16,12 @@ def calculate_price(max_weight, relaxing_room, seat_no, flight_id) -> float:
     row = row[0][0]
     print(row)
     rel_room_c = {
-        'middle': 200,
-        'comfort': 500,
-        'comfort+': 1000,
+        'middle': MIDDLE_TAX,
+        'comfort': COMFORT_TAX,
+        'comfort+': COMFORT_PLUS_TAX,
     }
     row += rel_room_c[relaxing_room]
-    baggage_c = 200
-    row += max_weight * baggage_c
+    row += max_weight * BAGGAGE_TAX
     return row
 
 def get_buisiness_class(flight_id):
